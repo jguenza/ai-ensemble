@@ -88,6 +88,54 @@
     .input button:hover {
       background: #1d4ed8;
     }
+
+    /* LOGIN OVERLAY */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,24,39,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .login-box {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 8px;
+      width: 320px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      font-size: 0.9rem;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .login-error {
+      color: #b91c1c;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      display: none;
+    }
   </style>
 </head>
 
@@ -96,6 +144,16 @@
 <header>
   AI-Ensemble · Role-Playing Learning Interface
 </header>
+
+<!-- LOGIN OVERLAY -->
+<div class="overlay" id="loginOverlay">
+  <div class="login-box">
+    <h2>Login</h2>
+    <input id="passwordInput" type="password" placeholder="Enter password" />
+    <button onclick="login()">Enter</button>
+    <div class="login-error" id="loginError">Invalid password</div>
+  </div>
+</div>
 
 <div class="layout">
 
@@ -129,7 +187,30 @@
 </div>
 
 <script>
-  const API_URL = "https://statsapp-47vj4.ondigitalocean.app/api/chat";
+  const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
+  let authToken = null;
+
+  async function login() {
+    const password = document.getElementById("passwordInput").value;
+    const error = document.getElementById("loginError");
+
+    try {
+      const res = await fetch(API_BASE + "/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+      authToken = data.token;
+      document.getElementById("loginOverlay").style.display = "none";
+
+    } catch {
+      error.style.display = "block";
+    }
+  }
 
   function addMessage(role, text, cls) {
     const box = document.getElementById(role + "Messages");
@@ -141,6 +222,8 @@
   }
 
   async function sendMessage(role) {
+    if (!authToken) return;
+
     const input = document.getElementById(role + "Input");
     const text = input.value.trim();
     if (!text) return;
@@ -149,9 +232,12 @@
     addMessage(role, "You: " + text, "user");
 
     try {
-      const res = await fetch(API_URL, {
+      const res = await fetch(API_BASE + "/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + authToken
+        },
         body: JSON.stringify({
           role: role,
           message: text
@@ -161,7 +247,7 @@
       const data = await res.json();
       addMessage(role, data.answer || "No response.", "ai");
 
-    } catch (err) {
+    } catch {
       addMessage(role, "Error contacting backend.", "ai");
     }
   }
@@ -169,4 +255,3 @@
 
 </body>
 </html>
-
