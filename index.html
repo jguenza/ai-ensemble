@@ -188,7 +188,7 @@
 
 <script>
   const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
-  let authToken = null;
+  let authToken = sessionStorage.getItem("ai_ensemble_token");
 
   async function login() {
     const password = document.getElementById("passwordInput").value;
@@ -205,11 +205,17 @@
 
       const data = await res.json();
       authToken = data.token;
+      sessionStorage.setItem("ai_ensemble_token", authToken);
       document.getElementById("loginOverlay").style.display = "none";
 
     } catch {
       error.style.display = "block";
     }
+  }
+
+  // Auto-unlock if token already exists
+  if (authToken) {
+    document.getElementById("loginOverlay").style.display = "none";
   }
 
   function addMessage(role, text, cls) {
