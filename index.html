@@ -1,232 +1,168 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <title>AI-Ensemble</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="AI-Ensemble is a role-playing learning game for expert reasoning, available online and as a local CPU-only system." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <style>
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      color: #111;
-      background: #fff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
     }
 
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 20px;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      margin-top: 3rem;
-      font-size: 1.5rem;
-    }
-
-    h3 {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-    }
-
-    p {
-      margin: 1rem 0;
-    }
-
-    ul {
-      margin: 1rem 0 1rem 1.5rem;
-    }
-
-    hr {
-      margin: 3rem 0;
-      border: none;
-      border-top: 1px solid #ddd;
-    }
-
-    .cta {
-      margin-top: 3rem;
-      padding: 1.5rem;
-      border: 1px solid #ddd;
-      background: #fafafa;
-    }
-
-    .cta a {
-      display: inline-block;
-      margin-top: 0.5rem;
+    header {
+      padding: 1rem 2rem;
+      background: #111827;
+      color: #ffffff;
+      font-size: 1.1rem;
       font-weight: 600;
-      text-decoration: none;
-      color: #0b5bd3;
     }
 
-    .muted {
-      color: #444;
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      padding: 1rem;
+      height: calc(100vh - 56px);
+      box-sizing: border-box;
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e5e7eb;
+    }
+
+    .panel h2 {
+      margin: 0;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
       font-size: 0.95rem;
+      background: #f9fafb;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+    }
+
+    .message {
+      margin-bottom: 0.75rem;
+    }
+
+    .message.user {
+      font-weight: 600;
+    }
+
+    .input {
+      display: flex;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .input input {
+      flex: 1;
+      border: none;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .input button {
+      border: none;
+      padding: 0.75rem 1rem;
+      background: #2563eb;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .input button:hover {
+      background: #1d4ed8;
     }
   </style>
 </head>
 
 <body>
-  <main>
 
-    <h1>AI-Ensemble</h1>
+<header>
+  AI-Ensemble · Scenario · Expert · Manager
+</header>
 
-    <p>
-      <strong>AI-Ensemble is a role-playing learning game for expert reasoning.</strong>
-      It is available as an online service and as a fully local system built on the same core logic.
-    </p>
+<div class="container">
 
-    <p>
-      Users do not interact with AI-Ensemble as a generic chatbot.
-      Instead, they enter a <strong>designed role-playing environment</strong> in which learning
-      happens through reasoning, decision-making, and confrontation with curated knowledge.
-    </p>
-
-    <hr>
-
-    <h2>The role-playing learning game</h2>
-
-    <p>
-      At the core of AI-Ensemble is a role-playing learning game.
-      Users take on professional roles such as:
-    </p>
-
-    <ul>
-      <li>coder</li>
-      <li>statistician</li>
-      <li>breeder</li>
-      <li>director or decision-maker</li>
-    </ul>
-
-    <p>
-      Each role frames how problems are presented and which trade-offs matter.
-      The same underlying knowledge may lead to different conclusions depending
-      on the role being played.
-    </p>
-
-    <p>
-      Learning is driven by <strong>engineered progression</strong>:
-      knowledge is introduced deliberately, users must justify claims using
-      available material, and progress can be blocked when understanding
-      is insufficient.
-    </p>
-
-    <p>
-      Speed and fluency do not matter.
-      What matters is reasoning, consistency, and evidence.
-    </p>
-
-    <hr>
-
-    <h2>One system, two ways to run it</h2>
-
-    <p>
-      AI-Ensemble is offered in two distributions of the same system:
-      an online version and a local version.
-      Both share the same learning logic, grounding rules, and role-playing mechanics.
-    </p>
-
-    <h3>Online version</h3>
-
-    <p>
-      The online version provides the full role-playing learning game
-      as a hosted service.
-      It is intended for users who want immediate access and a managed environment
-      without local setup.
-    </p>
-
-    <h3>Local version (CPU-only, low-carbon)</h3>
-
-    <p>
-      The local version is a direct spin-off of the online system.
-      It runs entirely on the user’s own machine using
-      <strong>quantized, CPU-only models</strong>.
-    </p>
-
-    <ul>
-      <li>No GPU required</li>
-      <li>No dependence on large cloud providers</li>
-      <li>User-configurable knowledge and settings</li>
-      <li>Offline-capable</li>
-    </ul>
-
-    <p>
-      The user can purchase either the online or the local version,
-      depending on their needs.
-      The learning game remains the same; only the deployment differs.
-    </p>
-
-    <hr>
-
-    <h2>Reliability through controlled inputs</h2>
-
-    <p>
-      Across both online and local versions, AI-Ensemble follows a strict rule:
-    </p>
-
-    <p>
-      <strong>The system reasons only over explicitly provided and curated knowledge.</strong>
-    </p>
-
-    <p>
-      If information is not present, the system does not invent it.
-      “I don’t know” is a valid and intentional outcome.
-      Reliability comes from input control and explicit evidence,
-      not from model scale.
-    </p>
-
-    <hr>
-
-    <h2>Responsible AI by design</h2>
-
-    <p>
-      By offering a local, CPU-only version built on quantized models,
-      AI-Ensemble reduces environmental impact and avoids dependence
-      on GPU-heavy infrastructure and mega cloud providers.
-    </p>
-
-    <p>
-      This design supports privacy, sustainability, and long-term
-      educational and professional use.
-    </p>
-
-    <div class="cta">
-      <p><strong>Enter the online learning game</strong></p>
-      <p class="muted">
-        Access the hosted role-playing learning environment.
-      </p>
-      <a href="https://statsapp-47vj4.ondigitalocean.app/">
-        Enter AI-Ensemble
-      </a>
+  <div class="panel">
+    <h2>Scenario</h2>
+    <div class="messages" id="scenarioMessages"></div>
+    <div class="input">
+      <input id="scenarioInput" placeholder="Describe the situation or decision..." />
+      <button onclick="sendMessage('scenario')">Send</button>
     </div>
+  </div>
 
-    <hr>
-<hr>
+  <div class="panel">
+    <h2>Expert</h2>
+    <div class="messages" id="expertMessages"></div>
+    <div class="input">
+      <input id="expertInput" placeholder="Ask for technical or scientific advice..." />
+      <button onclick="sendMessage('expert')">Send</button>
+    </div>
+  </div>
 
-<h2>Examples</h2>
+  <div class="panel">
+    <h2>Manager</h2>
+    <div class="messages" id="managerMessages"></div>
+    <div class="input">
+      <input id="managerInput" placeholder="Ask for strategy or process advice..." />
+      <button onclick="sendMessage('manager')">Send</button>
+    </div>
+  </div>
 
-<p>
-Concrete examples show how AI-Ensemble is used in practice
-across different roles and decision contexts.
-</p>
+</div>
 
-<p>
-<a href="examples.html">View example scenarios →</a>
-</p>
+<script>
+  const API_URL = "https://statsapp-47vj4.ondigitalocean.app/api/chat";
 
-    <p class="muted">
-      AI-Ensemble is a learning and decision-support system.
-      It does not replace expert judgment and should not be used
-      outside the scope of its explicitly provided knowledge.
-    </p>
+  function addMessage(panel, text, cls) {
+    const box = document.getElementById(panel + "Messages");
+    const div = document.createElement("div");
+    div.className = "message " + cls;
+    div.textContent = text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+  }
 
-  </main>
+  async function sendMessage(role) {
+    const input = document.getElementById(role + "Input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = "";
+    addMessage(role, "You: " + text, "user");
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          role: role,
+          message: text
+        })
+      });
+
+      const data = await res.json();
+      addMessage(role, data.answer || "No response.", "ai");
+
+    } catch (err) {
+      addMessage(role, "Error contacting backend.", "ai");
+    }
+  }
+</script>
+
 </body>
 </html>
