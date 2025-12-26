@@ -201,24 +201,23 @@
   </div>
 
 </div>
-<h2>Online and local deployment</h2>
+<h2>The system is designed as a left-to-right working pipeline.</h2>
 
 <p>
-AI-Ensemble is available in two deployments that share the same reasoning model
-but differ in execution.
+Left panel — Input
+Starts by typing the initial prompt in the leftmost panel.
+This defines the problem, question, or scenario and sets the context for everything that follows.
 </p>
 
 <p>
-The online version emphasizes guided scenarios and conceptual ensembles,
-where multiple reasoning paths are explored within a managed environment.
-It prioritizes accessibility and low setup effort.
+Middle panel — Processing / Refinement
+The content from the left panel is copied into the middle panel.
 </p>
 
 <p>
-The local version supports true ensembles by running multiple small,
-quantized models directly on the user’s machine.
-This enables full control over data, models, and energy usage,
-and removes any dependence on external AI providers.
+Right panel — Final Output
+Output from the middle panel is copied into the rightmost panel.
+This step produces the final results or answers.
 </p>
 <script>
   const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
