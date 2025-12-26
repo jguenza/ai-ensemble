@@ -201,7 +201,25 @@
   </div>
 
 </div>
+<h2>Online and local deployment</h2>
 
+<p>
+AI-Ensemble is available in two deployments that share the same reasoning model
+but differ in execution.
+</p>
+
+<p>
+The online version emphasizes guided scenarios and conceptual ensembles,
+where multiple reasoning paths are explored within a managed environment.
+It prioritizes accessibility and low setup effort.
+</p>
+
+<p>
+The local version supports true ensembles by running multiple small,
+quantized models directly on the user’s machine.
+This enables full control over data, models, and energy usage,
+and removes any dependence on external AI providers.
+</p>
 <script>
   const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
   let authToken = sessionStorage.getItem("ai_ensemble_token");
