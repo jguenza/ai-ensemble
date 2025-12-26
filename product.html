@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>AI-Ensemble — Product Overview</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="AI-Ensemble is a triple-screen reasoning system for scenario-based learning, expert analysis, and managerial decision support." />
+  <meta name="description" content="AI-Ensemble is a three-stage reasoning system based on Scenario, Ensemble, and Compiler." />
 
   <style>
     :root {
@@ -112,10 +112,6 @@
       font-weight: 600;
     }
 
-    .cta a:hover {
-      opacity: 0.9;
-    }
-
     footer {
       text-align: center;
       padding: 2rem 1.5rem;
@@ -132,8 +128,7 @@
 <header>
   <h1>AI-Ensemble</h1>
   <p>
-    A triple-screen reasoning system for scenario-based learning,
-    expert analysis, and managerial decision support.
+    A three-stage reasoning system based on Scenario, Ensemble, and Compiler.
   </p>
 </header>
 
@@ -142,13 +137,13 @@
   <section>
     <h2>Overview</h2>
     <p>
-      AI-Ensemble is a role-based reasoning system designed to support complex
+      AI-Ensemble is a structured reasoning system designed to support complex
       problem-solving, learning, and decision-making.
     </p>
     <p>
       Instead of interacting with a generic chatbot, users work through a
-      structured, three-screen interface that separates problem framing,
-      expert reasoning, and managerial decision support.
+      fixed reasoning pipeline that separates problem specification,
+      alternative reasoning, and grounded synthesis.
     </p>
     <p>
       The system is available both as an online, scenario-driven learning
@@ -162,20 +157,21 @@
   </section>
 
   <section>
-    <h2>The Three-Screen Reasoning Model</h2>
+    <h2>The Reasoning Pipeline</h2>
     <p>
-      At the core of AI-Ensemble is a fixed three-screen layout, designed to mirror
-      how real expert decisions are made.
+      At the core of AI-Ensemble is a fixed three-stage pipeline designed to
+      mirror how real technical and strategic decisions are made.
     </p>
 
     <div class="cards">
       <div class="card">
-        <h3>Scenario Screen</h3>
+        <h3>Scenario — prompt specification</h3>
         <p>
-          The Scenario screen defines the problem space.
+          This stage focuses on precisely defining the problem to be addressed,
+          including context, constraints, assumptions, and objectives.
         </p>
         <p>
-          Here, the user formulates a concrete scenario such as:
+          Scenarios may involve tasks such as:
         </p>
         <ul>
           <li>writing or reviewing code</li>
@@ -185,57 +181,49 @@
           <li>ICT or process optimization</li>
         </ul>
         <p>
-          The scenario establishes objectives, constraints, assumptions,
-          and success criteria. Scenarios may be predefined or fully user-defined.
+          Poorly specified problems are treated as a first-class failure mode.
         </p>
       </div>
 
       <div class="card">
-        <h3>Expert Screen</h3>
+        <h3>Ensemble — alternative reasoning</h3>
         <p>
-          The Expert screen supports the scenario with technical reasoning.
+          This stage generates multiple alternative answers or reasoning paths
+          for the same prompt.
         </p>
-        <ul>
-          <li>analyzes methods and options</li>
-          <li>reasons over evidence and domain knowledge</li>
-          <li>highlights assumptions and limitations</li>
-        </ul>
         <p>
-          This screen represents what is technically sound, not what is
-          operationally or politically convenient.
+          Its purpose is to expose uncertainty, disagreement, and competing
+          assumptions before any synthesis or decision is made.
         </p>
       </div>
 
       <div class="card">
-        <h3>Manager Screen</h3>
+        <h3>Compiler — grounded synthesis</h3>
         <p>
-          The Manager screen focuses on decisions and trade-offs.
+          This stage compares and reconciles alternatives produced by the
+          Ensemble.
         </p>
-        <ul>
-          <li>weighs risks and benefits</li>
-          <li>considers timelines, resources, and feasibility</li>
-          <li>translates expert insight into actionable choices</li>
-          <li>identifies decision bottlenecks</li>
-        </ul>
         <p>
-          It interprets expertise in context rather than replacing it.
+          It applies curated knowledge and explicit constraints to produce a
+          defensible result, or to state clearly when no reliable conclusion
+          can be drawn.
         </p>
       </div>
     </div>
   </section>
 
   <section>
-    <h2>Why Three Screens Matter</h2>
+    <h2>Why Three Stages Matter</h2>
     <p>
       Most AI systems merge all reasoning into a single response.
-      AI-Ensemble deliberately separates reasoning perspectives.
+      AI-Ensemble deliberately separates stages of reasoning.
     </p>
     <p>
       This separation reduces confusion, exposes hidden trade-offs,
       prevents premature conclusions, and mirrors how real projects are run.
     </p>
     <p>
-      The three screens work together, but they never collapse into one.
+      The stages work together, but they never collapse into one.
     </p>
   </section>
 
@@ -243,8 +231,8 @@
     <h2>User-Defined Scenarios and Private Knowledge</h2>
     <p>
       Users are not limited to predefined scenarios. They can create their own,
-      choose which information is available, and decide how expert and managerial
-      reasoning should support them.
+      choose which information is available, and control how reasoning is
+      performed.
     </p>
     <p>
       Knowledge is not global by default. AI-Ensemble operates on private,
@@ -266,8 +254,8 @@
       <li>No cloud dependency or external data access</li>
     </ul>
     <p>
-      This version is suitable for schools, families, private research,
-      privacy-sensitive environments, and offline use.
+      In the local version, the Ensemble stage can be implemented using multiple
+      small, quantized models running entirely on the user’s machine.
     </p>
   </section>
 
@@ -293,7 +281,7 @@
 </main>
 
 <footer>
-  AI-Ensemble — Structured reasoning through role separation
+  AI-Ensemble — Structured reasoning through controlled plurality
 </footer>
 
 </body>
