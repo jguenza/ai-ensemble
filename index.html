@@ -188,9 +188,9 @@
   <div class="panel">
     <h2>Compiler — grounded synthesis</h2>
      <p>
-     This interface synthesizes the alternative reasoning paths produced
-     by the Ensemble. It applies curated knowledge, to produce a final, 
-     result.
+     This interface compile the alternative reasoning paths produced
+     by the Ensemble. 
+     It applies curated knowledge, to compile the final result.
      </p>
 
     <div class="messages" id="managerMessages"></div>
@@ -201,24 +201,24 @@
   </div>
 
 </div>
-<h2>Prompt openers and closers should be used as described in examples below for optimal results </h2>
+<h2>Prompt openers and closers should be used as described below for optimal results </h2>
 
 <p>
-Left panel opener:'Please help me with the following scenario'— 
-Please help me with the following scenario: find me a good restaurant? -> bad prompt. 
-The system will help you to improve it
+Left panel opener:>'Please help me with the following scenario:'< 
+Please help me with the following scenario: find me a good restaurant? -> !bad prompt! 
+The system will help you create a better scenario.
 </p>
 
 <p>
-Middle panel opener: 'Based on your expert knowledge'-
+Middle panel opener:>'Based on your expert knowledge:'<
 Based on your expert knowledge: I am looking for a restaurant in Amsterdam for a business dinner with four people.
 The budget is €70–90 per person.
 </p>
 
 <p>
-Right panel closer: 'Please compile the above expert alternatives'-
-**Please paste the output from the Ensemble** Please compile the above expert alternatives
-This step produces the final solution, you can continue the chat without the closer for futher discussion at your own risk.
+Right panel closer:>'Please compile the above expert alternatives:'-<
+**Paste the output from the Ensemble** please compile the above expert alternatives.
+This step produces the final solution.
 </p>
 <script>
   const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
