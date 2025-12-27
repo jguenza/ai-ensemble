@@ -143,7 +143,7 @@
 <body>
 
 <header>
-  AI-Ensemble · Role-Playing Learning Interface
+  AI-Ensemble · AI pipeline interface, start left end right
 </header>
 
 <!-- LOGIN OVERLAY -->
@@ -159,13 +159,13 @@
 <div class="layout">
 
   <div class="panel">
-    <h2>Scenario — prompt specification</h2>
+    <h2>Scenario — prompt engineering</h2>
     <p>
-     This interface helps to specify the problem and the prompt to be used in the next interface
+     Crafting the input text (prompt) given to ensemble interface to control its output.
     </p>
     <div class="messages" id="scenarioMessages"></div>
     <div class="input">
-      <input id="scenarioInput" placeholder="Describe the situation or decision..." />
+      <input id="scenarioInput" placeholder="Describe the situation or challenge..." />
       <button onclick="sendMessage('scenario')">Send</button>
     </div>
   </div>
@@ -174,13 +174,13 @@
     <h2>Ensemble — alternative reasoning</h2>
     <p>
     This interface generates multiple answers based alternative reasoning paths.
-    Its purpose is to expose uncertainty, competing assumptions, and
-    different interpretations before any synthesis or decision is made.
+    Its purpose is to expose output variation given a prompt.
+    Copy and paste the output into the compiler for the final result.
     </p>
 
     <div class="messages" id="expertMessages"></div>
     <div class="input">
-      <input id="expertInput" placeholder="Ask for technical or scientific support..." />
+      <input id="expertInput" placeholder="paste answer from prompt engineering interface" />
       <button onclick="sendMessage('expert')">Send</button>
     </div>
   </div>
@@ -195,29 +195,30 @@
 
     <div class="messages" id="managerMessages"></div>
     <div class="input">
-      <input id="managerInput" placeholder="Ask for strategic or process guidance..." />
+      <input id="managerInput" placeholder="Paste the output from the Ensemble interface" />
       <button onclick="sendMessage('manager')">Send</button>
     </div>
   </div>
 
 </div>
-<h2>The system is designed as a left-to-right working pipeline.</h2>
+<h2>Prompt openers and closers should be used as described in examples below for optimal results </h2>
 
 <p>
-Left panel — 
-Type the initial prompt in the leftmost panel.
-This defines the problem, question, or scenario and sets the context for everything that follows.
+Left panel opener:'Please help me with the following scenario'— 
+Please help me with the following scenario: find me a good restaurant? -> bad prompt. 
+The system will help you to improve it
 </p>
 
 <p>
-Middle panel — Processing / Refinement.
-The content from the left panel is copied into the middle panel.
+Middle panel opener: 'Based on your expert knowledge'-
+Based on your expert knowledge: I am looking for a restaurant in Amsterdam for a business dinner with four people.
+The budget is €70–90 per person.
 </p>
 
 <p>
-Right panel — Final
-output from the middle panel is copied into the rightmost panel.
-This step produces the final results or answers.
+Right panel closer: 'Please compile the above expert alternatives'-
+**Please paste the output from the Ensemble** Please compile the above expert alternatives
+This step produces the final solution, you can continue the chat without the closer for futher discussion at your own risk.
 </p>
 <script>
   const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
