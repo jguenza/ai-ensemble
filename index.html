@@ -1,167 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AI-Ensemble</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
-textarea {
-  width: 100%;
-  height: 120px;
-}
-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-}
-.panel {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-.output {
-  white-space: pre-wrap;
-  background: #f7f7f7;
-  padding: 10px;
-  margin-top: 10px;
-}
-.hidden {
-  display: none;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>AI-Ensemble</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: #f8f9fb;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 1.5rem;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.3rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 0.8rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .ensemble {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .alternative {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .alternative h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    .compiler {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .hint {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 0.4rem;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>AI-Ensemble</h1>
+<header>
+  <h1>AI-Ensemble</h1>
+  <p>Scenario → Ensemble (parallel alternatives) → Compiler</p>
+</header>
 
-<!-- LOGIN -->
-<div id="loginPanel" class="panel">
-  <h3>Login</h3>
-  <input type="password" id="passwordInput" placeholder="Password"><br>
-  <input type="text" id="clientInput" placeholder="Client ID (optional)"><br>
-  <button onclick="login()">Login</button>
-  <div id="loginError" style="color:red;"></div>
-</div>
+<main>
 
-<!-- APP -->
-<div id="appPanel" class="hidden">
+  <!-- SCENARIO -->
+  <section>
+    <h2>Scenario — Prompt Specification</h2>
+    <textarea id="prompt" placeholder="Describe the scenario. Ambiguity and trade-offs are encouraged."></textarea>
+    <div class="hint">
+      Good scenarios admit multiple plausible interpretations. Avoid simple factual questions.
+    </div>
+    <button type="submit" id="sendBtn">Send to Ensemble</button>
+  </section>
 
-  <div class="panel">
-    <h3>Scenario — prompt engineering</h3>
-    <textarea id="scenarioInput" placeholder="Describe the situation or challenge..."></textarea>
-    <button onclick="sendPrompt('scenario')">Send</button>
-    <div id="scenarioOutput" class="output"></div>
-  </div>
+  <!-- ENSEMBLE -->
+  <section>
+    <h2>Ensemble — Alternative Reasoning</h2>
 
-  <div class="panel">
-    <h3>Ensemble — alternative reasoning</h3>
-    <textarea id="ensembleInput" placeholder="Paste scenario output here..."></textarea>
-    <button onclick="sendPrompt('ensemble')">Send</button>
-    <div id="ensembleOutput" class="output"></div>
-  </div>
+    <div class="ensemble">
+      <div class="alternative" id="alt-a">
+        <h3>Alternative A</h3>
+        <div class="content"></div>
+      </div>
 
-  <div class="panel">
-    <h3>Compiler — grounded synthesis</h3>
-    <textarea id="compilerInput" placeholder="Paste ensemble output here..."></textarea>
-    <button onclick="sendPrompt('compiler')">Send</button>
-    <div id="compilerOutput" class="output"></div>
-  </div>
+      <div class="alternative" id="alt-b">
+        <h3>Alternative B</h3>
+        <div class="content"></div>
+      </div>
 
-</div>
+      <div class="alternative" id="alt-c">
+        <h3>Alternative C</h3>
+        <div class="content"></div>
+      </div>
+    </div>
 
-<script>
-const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
+    <div class="hint">
+      Each alternative is generated independently under different sampling constraints.
+    </div>
+  </section>
 
-/* ---------------- LOGIN ---------------- */
+  <!-- COMPILER -->
+  <section>
+    <h2>Compiler — Grounded Synthesis</h2>
+    <div class="compiler" id="compiler">
+      <div class="hint">
+        The compiler evaluates the alternatives against the original scenario constraints.
+      </div>
+      <div id="compiler-output"></div>
+    </div>
+  </section>
 
-async function login() {
-  const password = document.getElementById("passwordInput").value;
-  const clientId = document.getElementById("clientInput").value;
-  const errorBox = document.getElementById("loginError");
+</main>
 
-  try {
-    const res = await fetch(API_BASE + "/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password, client_id: clientId })
-    });
-
-    const data = await res.json();
-
-    if (!data.ok) {
-      errorBox.innerText = data.error || "Login failed";
-      return;
-    }
-
-    // ✅ STORE TOKEN — THIS WAS MISSING
-    sessionStorage.setItem("ai_ensemble_token", data.access_token);
-
-    // Switch UI
-    document.getElementById("loginPanel").classList.add("hidden");
-    document.getElementById("appPanel").classList.remove("hidden");
-
-  } catch (err) {
-    errorBox.innerText = "Login error";
-  }
-}
-
-/* ---------------- CHAT ---------------- */
-
-async function sendPrompt(stage) {
-  const token = sessionStorage.getItem("ai_ensemble_token");
-  if (!token) {
-    alert("Not logged in");
-    return;
-  }
-
-  const input = document.getElementById(stage + "Input");
-  const output = document.getElementById(stage + "Output");
-
-  output.innerText = "Working...";
-
-  try {
-    const res = await fetch(API_BASE + "/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token   // ✅ REQUIRED
-      },
-      body: JSON.stringify({ message: input.value })
-    });
-
-    const data = await res.json();
-
-    if (!data.ok) {
-      output.innerText = data.error || "Error";
-      return;
-    }
-
-    // Handle planes or single answer
-    if (data.planes) {
-      let txt = "";
-      for (const k in data.planes) {
-        txt += `=== ${k.toUpperCase()} ===\n${data.planes[k]}\n\n`;
-      }
-      output.innerText = txt;
-    } else {
-      output.innerText = data.answer || "No response";
-    }
-
-  } catch (err) {
-    output.innerText = "Backend error";
-  }
-}
-
-/* ---------------- AUTO-RESTORE SESSION ---------------- */
-
-if (sessionStorage.getItem("ai_ensemble_token")) {
-  document.getElementById("loginPanel").classList.add("hidden");
-  document.getElementById("appPanel").classList.remove("hidden");
-}
-</script>
+<script src="static/script.js"></script>
 
 </body>
 </html>
