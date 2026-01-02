@@ -1,71 +1,48 @@
-// AI-Ensemble frontend script
-// Contract: POST /api/chat  -> { ok, model, planes:{conservative,balanced,exploratory} }
-
 document.addEventListener("DOMContentLoaded", () => {
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("promptInput");
   const sendBtn = document.getElementById("sendBtn");
-  const promptInput = document.getElementById("promptInput");
 
-  const outConservative = document.getElementById("out-conservative");
-  const outBalanced = document.getElementById("out-balanced");
-  const outExploratory = document.getElementById("out-exploratory");
-
-  function clearOutputs() {
-    outConservative.textContent = "";
-    outBalanced.textContent = "";
-    outExploratory.textContent = "";
-  }
-
-  function showError(msg) {
-    outConservative.textContent = msg;
-    outBalanced.textContent = msg;
-    outExploratory.textContent = msg;
+  function append(text, className = "") {
+    const div = document.createElement("div");
+    div.textContent = text;
+    if (className) div.className = className;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
   }
 
   sendBtn.addEventListener("click", async () => {
-    const promptText = promptInput.value.trim();
-    if (!promptText) {
-      return;
-    }
+    const prompt = input.value.trim();
+    if (!prompt) return;
 
-    clearOutputs();
+    append(`You:\n${prompt}`, "user");
+    input.value = "";
 
     try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/chat",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: promptText
-          })
-        }
-      );
+      const response = await fetch("http://127.0.0.1:8000/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: prompt })
+      });
 
-      const text = await response.text();
-
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        showError("Error: Backend did not return JSON");
-        console.error("Raw response:", text);
-        return;
-      }
+      const data = await response.json();
 
       if (!data.ok || !data.planes) {
-        showError("Error: Invalid API response");
-        console.error(data);
+        append("Error: Invalid response from backend");
         return;
       }
 
-      outConservative.textContent = data.planes.conservative || "";
-      outBalanced.textContent = data.planes.balanced || "";
-      outExploratory.textContent = data.planes.exploratory || "";
+      append("Conservative:", "plane");
+      append(data.planes.conservative, "plane");
+
+      append("Balanced:", "plane");
+      append(data.planes.balanced, "plane");
+
+      append("Exploratory:", "plane");
+      append(data.planes.exploratory, "plane");
 
     } catch (err) {
-      showError("Error: API call failed");
+      append("Error: API call failed");
       console.error(err);
     }
   });
