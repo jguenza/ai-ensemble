@@ -1,126 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AI-Ensemble</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-    }
-    header {
-      background: #0b1a2b;
-      color: white;
-      padding: 12px 20px;
-      font-size: 20px;
-    }
-    .login {
-      padding: 20px;
-      background: white;
-      border-bottom: 1px solid #ccc;
-    }
-    .login input {
-      margin-right: 10px;
-      padding: 6px;
-    }
-    .login button {
-      padding: 6px 12px;
-    }
-    .container {
-      display: flex;
-      gap: 10px;
-      padding: 10px;
-    }
-    .panel {
-      flex: 1;
-      background: white;
-      border: 1px solid #ccc;
-      display: flex;
-      flex-direction: column;
-    }
-    .panel h3 {
-      margin: 0;
-      padding: 10px;
-      background: #eee;
-      border-bottom: 1px solid #ccc;
-    }
-    .panel textarea {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      resize: none;
-      font-family: monospace;
-    }
-    .panel pre {
-      flex: 1;
-      padding: 10px;
-      margin: 0;
-      white-space:       overflow-y: auto;
-      background: #fafafa;
-      font-family: monospace;
-    }
-    .panel button {
-      margin: 10px;
-      padding: 8px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>AI-Ensemble</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+
+  margin: 20px;
+}
+textarea {
+  width: 100%;
+  height: 120px;
+}
+button {
+  margin-top: 10px;
+  padding: 6px 12px;
+}
+.panel {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.output {
+  white-space: pre-wrap;
+  background: #f7f7f7;
+  padding: 10px;
+  margin-top: 10px;
+}
+.hidden {
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  AI-Ensemble — AI pipeline interface, start left end right
-</header>
+<h1>AI-Ensemble</h1>
 
-<div class="login">
-  <strong>Password:</strong>
-  <input type="password" id="passwordInput">
-  <strong>Client ID:</strong>
-  <input type="text" id="clientIdInput" placeholder="optional">
+<!-- LOGIN -->
+<div id="loginPanel" class="panel">
+  <h3>Login</h3>
+  <input type="password" id="passwordInput" placeholder="Password"><br>
+  <input type="text" id="clientInput" placeholder="Client ID (optional)"><br>
   <button onclick="login()">Login</button>
-  <span id="loginError" style="color:red;margin-left:10px;"></span>
+  <div id="loginError" style="color:red;"></div>
 </div>
 
-<div class="container">
+<!-- APP -->
+<div id="appPanel" class="hidden">
 
-  <!-- SCENARIO -->
   <div class="panel">
-    <h3>Scenario — prompt input</h3>
+    <h3>Scenario — prompt engineering</h3>
     <textarea id="scenarioInput" placeholder="Describe the situation or challenge..."></textarea>
-    <button id="scenarioSend">Send</button>
-    <pre id="scenarioOutput">No response.</pre>
+    <button onclick="sendPrompt('scenario')">Send</button>
+    <div id="scenarioOutput" class="output"></div>
   </div>
 
-  <!-- ENSEMBLE -->
   <div class="panel">
     <h3>Ensemble — alternative reasoning</h3>
-    <textarea id="ensembleInput" placeholder="Paste or reuse scenario prompt..."></textarea>
-    <button id="ensembleSend">Send</button>
-    <pre id="ensembleOutput">No response.</pre>
+    <textarea id="ensembleInput" placeholder="Paste scenario output here..."></textarea>
+    <button onclick="sendPrompt('ensemble')">Send</button>
+    <div id="ensembleOutput" class="output"></div>
   </div>
 
-  <!-- COMPILER -->
   <div class="panel">
     <h3>Compiler — grounded synthesis</h3>
     <textarea id="compilerInput" placeholder="Paste ensemble output here..."></textarea>
-    <button id="compilerSend">Send</button>
-    <pre id="compilerOutput">No response.</pre>
+    <button onclick="sendPrompt('compiler')">Send</button>
+    <div id="compilerOutput" class="output"></div>
   </div>
 
 </div>
 
 <script>
-/* ================= CONFIG ================= */
 const API_BASE = "https://statsapp-47vj4.ondigitalocean.app";
-let authToken = sessionStorage.getItem("ai_ensemble_token");
 
-/* ================= LOGIN ================= */
+/* ---------------- LOGIN ---------------- */
+
 async function login() {
   const password = document.getElementById("passwordInput").value;
-  const clientId = document.getElementById("clientIdInput").value || "web";
-  const error = document.getElementById("loginError");
+  const clientId = document.getElementById("clientInput").value;
+  const errorBox = document.getElementById("loginError");
 
   try {
     const res = await fetch(API_BASE + "/api/login", {
@@ -130,82 +91,77 @@ async function login() {
     });
 
     const data = await res.json();
+
     if (!data.ok) {
-      error.innerText = "Login failed";
+      errorBox.innerText = data.error || "Login failed";
       return;
     }
 
-    authToken = data.access_token;
-    sessionStorage.setItem("ai_ensemble_token", authToken);
-    error.innerText = "";
-    alert("Login successful");
+    // ✅ STORE TOKEN — THIS WAS MISSING
+    sessionStorage.setItem("ai_ensemble_token", data.access_token);
 
-  } catch (e) {
-    error.innerText = "Login error";
+    // Switch UI
+    document.getElementById("loginPanel").classList.add("hidden");
+    document.getElementById("appPanel").classList.remove("hidden");
+
+  } catch (err) {
+    errorBox.innerText = "Login error";
   }
 }
 
-/* ================= SEND ================= */
-async function sendPrompt(inputId, outputId) {
-  const input = document.getElementById(inputId);
-  const output = document.getElementById(outputId);
-  const message = input.value.trim();
+/* ---------------- CHAT ---------------- */
 
-  if (!message) {
-    output.innerText = "No input.";
+async function sendPrompt(stage) {
+  const token = sessionStorage.getItem("ai_ensemble_token");
+  if (!token) {
+    alert("Not logged in");
     return;
   }
 
-  output.innerText = "Loading…";
+  const input = document.getElementById(stage + "Input");
+  const output = document.getElementById(stage + "Output");
+
+  output.innerText = "Working...";
 
   try {
     const res = await fetch(API_BASE + "/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": authToken ? "Bearer " + authToken : ""
+        "Authorization": "Bearer " + token   // ✅ REQUIRED
       },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ message: input.value })
     });
 
     const data = await res.json();
 
     if (!data.ok) {
-      output.innerText = "Backend error.";
+      output.innerText = data.error || "Error";
       return;
     }
 
+    // Handle planes or single answer
     if (data.planes) {
-      let text = "";
-      for (const [plane, answer] of Object.entries(data.planes)) {
-        text += "=== " + plane.toUpperCase() + " ===\n\n";
-        text += answer + "\n\n";
+      let txt = "";
+      for (const k in data.planes) {
+        txt += `=== ${k.toUpperCase()} ===\n${data.planes[k]}\n\n`;
       }
-      output.innerText = text.trim();
-      return;
+      output.innerText = txt;
+    } else {
+      output.innerText = data.answer || "No response";
     }
-
-    if (data.answer) {
-      output.innerText = data.answer;
-      return;
-    }
-
-    output.innerText = "No response.";
 
   } catch (err) {
-    output.innerText = "Network error.";
+    output.innerText = "Backend error";
   }
 }
 
-/* ================= BINDINGS ================= */
-document.getElementById("scenarioSend").onclick =
-  () => sendPrompt("scenarioInput", "scenarioOutput");
+/* ---------------- AUTO-RESTORE SESSION ---------------- */
 
-document.getElementById("ensembleSend").onclick =
-  () => sendPrompt("ensembleInput", "ensembleOutput");
-
-document.getElementById("compilerSend").onclick =
-  () => sendPrompt("compilerInput", "compilerOutput");
+if (sessionStorage.getItem("ai_ensemble_token")) {
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("appPanel").classList.remove("hidden");
+}
 </script>
 
 </body>
