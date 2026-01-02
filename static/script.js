@@ -1,44 +1,33 @@
-// AI-Ensemble Frontend Script
-// Contract: expects backend JSON of the form
-// {
-//   ok: true,
-//   model: "...",
-//   planes: {
-//     conservative: "...",
-//     balanced: "...",
-//     exploratory: "..."
-//   }
-// }
+// AI-Ensemble frontend script
+// Contract: POST /api/chat  -> { ok, model, planes:{conservative,balanced,exploratory} }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const sendButton = document.getElementById("send-btn");
-  const scenarioInput = document.getElementById("scenario-input");
+  const sendBtn = document.getElementById("sendBtn");
+  const promptInput = document.getElementById("promptInput");
 
-  const conservativeBox = document.getElementById("plane-conservative");
-  const balancedBox = document.getElementById("plane-balanced");
-  const exploratoryBox = document.getElementById("plane-exploratory");
+  const outConservative = document.getElementById("out-conservative");
+  const outBalanced = document.getElementById("out-balanced");
+  const outExploratory = document.getElementById("out-exploratory");
 
-  if (!sendButton || !scenarioInput) {
-    console.error("UI elements missing — check index.html wiring");
-    return;
+  function clearOutputs() {
+    outConservative.textContent = "";
+    outBalanced.textContent = "";
+    outExploratory.textContent = "";
   }
 
-  sendButton.addEventListener("click", async () => {
-    const prompt = scenarioInput.value.trim();
+  function showError(msg) {
+    outConservative.textContent = msg;
+    outBalanced.textContent = msg;
+    outExploratory.textContent = msg;
+  }
 
-    if (!prompt) {
-      alert("Please enter a scenario prompt.");
+  sendBtn.addEventListener("click", async () => {
+    const promptText = promptInput.value.trim();
+    if (!promptText) {
       return;
     }
 
-    // Clear previous outputs
-    conservativeBox.textContent = "Loading…";
-    balancedBox.textContent = "Loading…";
-    exploratoryBox.textContent = "Loading…";
-
-    const payload = {
-      prompt: prompt
-    };
+    clearOutputs();
 
     try {
       const response = await fetch(
@@ -48,69 +37,36 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({  message: promptText})
-;
+          body: JSON.stringify({
+            message: promptText
+          })
+        }
+      );
 
-      // If backend returned HTML (auth page), JSON parsing will fail
-const text = await response.text();
-console.log("RAW RESPONSE:", text);
-
-let data;
-try {
-  data = JSON.parse(text);
-} catch (e) {
-  throw new Error("Response is not valid JSON");
-}
-
-if (!data.ok || !data.planes) {
-  throw new Error("Invalid API response");
-}
-
-document.getElementById("conservative-output").textContent =
-  data.planes.conservative || "";
-
-document.getElementById("balanced-output").textContent =
-  data.planes.balanced || "";
-
-document.getElementById("exploratory-output").textContent =
-  data.planes.exploratory || "";
+      const text = await response.text();
 
       let data;
       try {
         data = JSON.parse(text);
       } catch (e) {
-        throw new Error(
-          "Backend did not return JSON. Received HTML instead."
-        );
+        showError("Error: Backend did not return JSON");
+        console.error("Raw response:", text);
+        return;
       }
 
-      if (!data.ok) {
-        throw new Error(data.error || "Backend returned ok=false");
+      if (!data.ok || !data.planes) {
+        showError("Error: Invalid API response");
+        console.error(data);
+        return;
       }
 
-      if (!data.planes) {
-        throw new Error("Missing 'planes' object in response");
-      }
-
-      // Render each plane explicitly
-      conservativeBox.textContent =
-        data.planes.conservative || "(empty)";
-      balancedBox.textContent =
-        data.planes.balanced || "(empty)";
-      exploratoryBox.textContent =
-        data.planes.exploratory || "(empty)";
+      outConservative.textContent = data.planes.conservative || "";
+      outBalanced.textContent = data.planes.balanced || "";
+      outExploratory.textContent = data.planes.exploratory || "";
 
     } catch (err) {
+      showError("Error: API call failed");
       console.error(err);
-
-      const msg =
-        err.message ||
-        "Unexpected error while contacting backend.";
-
-      conservativeBox.textContent = "Error: " + msg;
-      balancedBox.textContent = "Error: " + msg;
-      exploratoryBox.textContent = "Error: " + msg;
     }
   });
 });
-const textconst text
