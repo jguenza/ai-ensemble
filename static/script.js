@@ -35,7 +35,7 @@ sendBtn.addEventListener("click", async () => {
   setAllPlanes("Thinking…");
 
   try {
-    const response = await fetch("/api/chat", {
+    const response = await fetch("https://statsapp-47vj4.ondigitalocean.app/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),
