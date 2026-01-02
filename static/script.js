@@ -42,19 +42,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const response = await fetch(
-        "https://statsapp-47vj4.ondigitalocean.app/api/chat",
+        "http://127.0.0.1:8000/api/chat",
         {
           method: "POST",
-          credentials: "include", // CRITICAL: send auth cookies
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(payload)
-        }
-      );
+          body: JSON.stringify({  message: promptText})
+;
 
       // If backend returned HTML (auth page), JSON parsing will fail
-      const text = await response.text();
+const text = await response.text();
+console.log("RAW RESPONSE:", text);
+
+let data;
+try {
+  data = JSON.parse(text);
+} catch (e) {
+  throw new Error("Response is not valid JSON");
+}
+
+if (!data.ok || !data.planes) {
+  throw new Error("Invalid API response");
+}
+
+document.getElementById("conservative-output").textContent =
+  data.planes.conservative || "";
+
+document.getElementById("balanced-output").textContent =
+  data.planes.balanced || "";
+
+document.getElementById("exploratory-output").textContent =
+  data.planes.exploratory || "";
 
       let data;
       try {
@@ -94,3 +113,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+const textconst text
