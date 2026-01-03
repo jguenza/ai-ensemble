@@ -1,7 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  // ==============================
+  // Existing bindings (UNCHANGED)
+  // ==============================
+
   const chat = document.getElementById("chat");
   const input = document.getElementById("promptInput");
   const sendBtn = document.getElementById("sendBtn");
+
+  // Conceptual prefix (already present in your file)
+  const CONCEPTUAL_PREFIX =
+    "answer this from a philosophical point of view: ";
+
+  // ==============================
+  // NEW bindings — Conceptual UI
+  // ==============================
+
+  const conceptualInput = document.getElementById("conceptualInput");
+  const conceptualBtn = document.getElementById("conceptualBtn");
+  const conceptualOutput = document.getElementById("conceptualOutput");
+
+  // ==============================
+  // Helper: append to ensemble chat
+  // ==============================
 
   function append(text, className = "") {
     const div = document.createElement("div");
@@ -11,6 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
     chat.scrollTop = chat.scrollHeight;
   }
 
+  // ==============================
+  // Ensemble handler (Input A)
+  // ==============================
+
   sendBtn.addEventListener("click", async () => {
     const prompt = input.value.trim();
     if (!prompt) return;
@@ -19,11 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = "";
 
     try {
-      const response = await fetch("https://statsapp-47vj4.ondigitalocean.app/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: prompt })
-      });
+      const response = await fetch(
+        "https://statsapp-47vj4.ondigitalocean.app/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: prompt })
+        }
+      );
 
       const data = await response.json();
 
@@ -46,4 +74,43 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
     }
   });
+
+  // ==============================
+  // Conceptual handler (Input B)
+  // ==============================
+
+  conceptualBtn.addEventListener("click", async () => {
+    const prompt = conceptualInput.value.trim();
+    if (!prompt) return;
+
+    conceptualOutput.textContent = "Thinking conceptually…";
+
+    try {
+      const response = await fetch(
+        "https://statsapp-47vj4.ondigitalocean.app/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: CONCEPTUAL_PREFIX + prompt
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!data.ok || !data.planes || !data.planes.exploratory) {
+        conceptualOutput.textContent = "Error: Invalid response from backend";
+        return;
+      }
+
+      // Exploratory plane shown as Conceptual
+      conceptualOutput.textContent = data.planes.exploratory;
+
+    } catch (err) {
+      conceptualOutput.textContent = "Error: API call failed";
+      console.error(err);
+    }
+  });
+
 });
