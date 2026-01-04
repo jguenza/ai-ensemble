@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const CONCEPTUAL_PREFIX =
     "answer this from a philosophical point of view: ";
 
+   const APPLIED_SUFFIX =
+  " and explain how you came to this solution";
+
   // ==============================
   // NEW bindings — Conceptual UI
   // ==============================
@@ -113,4 +116,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+});
+appliedBtn.addEventListener("click", async () => {
+  const prompt = appliedInput.value.trim();
+  if (!prompt) return;
+
+  appliedOutput.textContent = "Thinking (applied research)…";
+
+  try {
+    const response = await fetch(
+      "https://statsapp-47vj4.ondigitalocean.app/api/chat",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: prompt + APPLIED_SUFFIX
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!data.ok || !data.planes || !data.planes.balanced) {
+      appliedOutput.textContent = "Error: Invalid response from backend";
+      return;
+    }
+
+    // Selective rendering: BALANCED only
+    appliedOutput.textContent = data.planes.balanced;
+
+  } catch (err) {
+    appliedOutput.textContent = "Error: API call failed";
+    console.error(err);
+  }
 });
