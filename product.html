@@ -2,52 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AI-Ensemble — Product Overview</title>
+  <title>AI-Ensemble — Product</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="AI-Ensemble is a three-stage reasoning system based on Scenario, Ensemble, and Compiler." />
+  <meta name="description"
+        content="AI-Ensemble is a three-stage stochastic reasoning system using one-shot, stateless inference with explicit stochastic control." />
 
   <style>
     :root {
-      --bg: #f8f9fb;
+      --bg: #f7f7f7;
       --fg: #1f2937;
       --muted: #6b7280;
+      --border: #d1d5db;
+      --panel: #ffffff;
       --accent: #2563eb;
-      --card: #ffffff;
-      --border: #e5e7eb;
     }
 
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: var(--fg);
       background: var(--bg);
+      color: var(--fg);
       line-height: 1.6;
     }
 
     header {
-      background: var(--card);
+      background: var(--panel);
       border-bottom: 1px solid var(--border);
-      padding: 3rem 1.5rem;
-      text-align: center;
+      padding: 2.5rem 2rem;
     }
 
     header h1 {
-      margin: 0 0 0.5rem 0;
-      font-size: 2.2rem;
+      margin: 0;
+      font-size: 1.8rem;
     }
 
     header p {
-      margin: 0;
+      margin-top: 0.5rem;
       color: var(--muted);
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 900px;
     }
 
     main {
-      max-width: 960px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 3rem 1.5rem;
+      padding: 2.5rem 2rem;
     }
 
     section {
@@ -55,70 +53,67 @@
     }
 
     h2 {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
     }
 
     h3 {
       margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
     }
 
     p {
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
+      max-width: 900px;
     }
 
     ul {
       padding-left: 1.2rem;
+      max-width: 900px;
     }
 
     li {
       margin-bottom: 0.4rem;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .card {
-      background: var(--card);
+    .pipeline {
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 8px;
       padding: 1.5rem;
     }
 
-    .card h3 {
-      margin-top: 0;
+    .stage {
+      margin-bottom: 1.5rem;
+    }
+
+    .stage:last-child {
+      margin-bottom: 0;
     }
 
     .cta {
-      text-align: center;
-      margin-top: 4rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
     }
 
     .cta a {
       display: inline-block;
       background: var(--accent);
-      color: white;
-      padding: 0.9rem 1.4rem;
-      border-radius: 6px;
+      color: #fff;
       text-decoration: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 4px;
       font-weight: 600;
     }
 
     footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      font-size: 0.9rem;
-      color: var(--muted);
+      background: var(--panel);
       border-top: 1px solid var(--border);
-      background: var(--card);
+      padding: 1.5rem 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
     }
   </style>
 </head>
@@ -128,7 +123,8 @@
 <header>
   <h1>AI-Ensemble</h1>
   <p>
-  A prompt-engineered system combining structured knowledge embedding with a compiler-style solution generator.
+    A three-stage stochastic reasoning pipeline that separates exploration,
+    comparison, and application using explicit prompt priors and controlled sampling.
   </p>
 </header>
 
@@ -137,144 +133,129 @@
   <section>
     <h2>Overview</h2>
     <p>
-      AI-Ensemble is a structured reasoning system for problem-solving.
+      AI-Ensemble is a stochastic reasoning system designed for research,
+      modelling, and decision support.
     </p>
     <p>
-      Instead of interacting with a generic chatbot, users work through a
-      fixed reasoning pipeline that separates problem specification,
-      alternative reasoning, and solution.
+      Unlike chat-based assistants, AI-Ensemble is <strong>stateless</strong>.
+      Each query is evaluated independently as a one-shot generation under
+      a defined stochastic regime and an explicit prompt prior.
+      There is no accumulating dialogue state and no hidden conversational memory.
     </p>
     <p>
-      The system is available both as an online and as a fully local, low-carbon (“Green AI”) version that
-      runs entirely on the user’s own machine.
-    </p>
-    <p>
-      Both versions share the same core principles:
-      controlled reasoning, response variation, and explicit knowledge inputs.
+      This design ensures that reasoning remains attributable, comparable,
+      and free from prompt drift across runs.
     </p>
   </section>
 
   <section>
-    <h2>The AI Pipeline</h2>
-    <p>
-      At the core of AI-Ensemble is a fixed three-stage pipeline designed to
-      guide the user toward the optimal solution.
-    </p>
+    <h2>The stochastic reasoning pipeline</h2>
 
-    <div class="cards">
-      <div class="card">
-        <h3>Scenario — prompt specification</h3>
+    <div class="pipeline">
+
+      <div class="stage">
+        <h3>1. Conceptual — exploratory reasoning</h3>
         <p>
-          This stage focuses on precisely defining the prompt to be used,
-          including context, constraints, assumptions, and objectives.
+          The Conceptual stage is designed for abstraction, reframing,
+          and hypothesis generation.
         </p>
         <p>
-          Prompts may involve tasks such as:
+          It operates under a high-variance stochastic regime and applies
+          a conceptual prompt prior (prefix or suffix) to deliberately
+          broaden the solution space.
         </p>
-        <ul>
-          <li>algorithm creation</li>
-          <li>planning an experiment</li>
-          <li>application building</li>
-          <li>school project/studying</li>
-        </ul>
         <p>
-          Poorly specified prompts are improved.
+          This stage is optimized for discovery and idea expansion,
+          not for precision or convergence.
         </p>
       </div>
 
-      <div class="card">
-        <h3>Ensemble — alternative reasoning</h3>
+      <div class="stage">
+        <h3>2. Ensemble — parallel stochastic alternatives</h3>
         <p>
-          This stage generates multiple alternative answers or reasoning paths
-          for the same prompt.
+          The Ensemble stage evaluates the same input in parallel stochastic planes.
         </p>
         <p>
-          Its purpose is to expose uncertainty and variation conditional on the prompt
-          before any synthesis or decision is made.
+          Each plane shares identical instructions and differs only in
+          sampling parameters such as temperature, top-p, top-k,
+          or repetition control.
+        </p>
+        <p>
+          Outputs are rendered side-by-side to expose uncertainty and
+          solution multiplicity before any commitment is made.
         </p>
       </div>
 
-      <div class="card">
-        <h3>Compiler — grounded synthesis</h3>
+      <div class="stage">
+        <h3>3. Applied Research — constrained reasoning</h3>
         <p>
-          This stage combines alternatives answers into a solution.
+          The Applied Research stage converts exploration into action.
         </p>
         <p>
-          It applies curated knowledge and information mixtures to produce a
-          defensible result.
+          It operates under a lower-variance stochastic regime and applies
+          explicit explanatory constraints, such as stating assumptions
+          and justifying reasoning steps.
+        </p>
+        <p>
+          The result is optimized for clarity, reproducibility,
+          and defensible decision-making.
         </p>
       </div>
+
     </div>
   </section>
 
   <section>
-    <h2>Our unique value</h2>
+    <h2>One-shot and stateless by design</h2>
     <p>
-      Most AI systems merge all reasoning into a single response.
-      AI-Ensemble deliberately separates stages of reasoning.
+      AI-Ensemble uses a one-shot generation paradigm rather than
+      a conversational memory model.
     </p>
     <p>
-      This separation allows us to deliver our curated knowledge to each stage. 
-      We expose answer variation to the user by multiple local models or reasoning paths online.
-    </p>
-    <p>
-      The stages work together when users move knowledge through the stages of our pipeline.
+      Each interface call is evaluated independently under explicit
+      stochastic and prompt constraints, ensuring clean attribution
+      and valid comparison across runs.
     </p>
   </section>
 
   <section>
-    <h2>Pipeline way of working with AI</h2>
+    <h2>Model-agnostic and local execution</h2>
     <p>
-      Users optimize their prompts. They benefit from expert prior information. And exploit answer 
-      variation given a prompt.
+      AI-Ensemble is model-agnostic and does not depend on proprietary
+      cloud-only features.
     </p>
     <p>
-      Knowledge is not only model based. AI-Ensemble operates on private,
-      expert-provided knowledge sources.
- </p>
-  </section>
-
-  <section>
-    <h2>Local “Green AI” Version</h2>
-    <p>
-      The local version runs entirely on the user’s own machine and is designed
-      for efficiency, privacy, and independence.
+      The same three-stage stochastic pipeline can be executed locally
+      using open-weight models, enabling versioned, reproducible reasoning
+      without cloud dependency.
     </p>
     <ul>
-      <li>CPU-only (no GPU required)</li>
-      <li>Runs on commodity hardware/testing is needed</li>
-      <li>Uses quantized models</li>
-      <li>No cloud dependency or external data access</li>
+      <li>CPU-only execution (no GPU required)</li>
+      <li>Quantized models supported</li>
+      <li>No external data access required</li>
+      <li>Exact control over sampling parameters and seeds</li>
     </ul>
-    <p>
-      In the local version, the Ensemble stage can be implemented using multiple
-      small, quantized models running entirely on the user’s machine.
-    </p>
   </section>
 
   <section>
-    <h2>Design Philosophy</h2>
-    <p>
-      AI-Ensemble is built around a simple principle:
-    </p>
+    <h2>Design philosophy</h2>
     <p>
       <strong>
-        Reliable reasoning emerges from structure, curated, and knowledge diversity —
-        not from single sources only.
+        Reliable reasoning emerges from structure, explicit constraints,
+        and controlled stochastic plurality — not from conversational memory
+        or scale alone.
       </strong>
     </p>
   </section>
 
   <div class="cta">
-    <a href="https://jguenza.github.io/ai-ensemble/">
-      Open AI-Ensemble
-    </a>
+    <a href="https://jguenza.github.io/ai-ensemble/">Open AI-Ensemble</a>
   </div>
 
 </main>
 
 <footer>
-  AI-Ensemble — AI solutions through controlled plurality
+  AI-Ensemble — controlled stochastic reasoning as a first-class instrument
 </footer>
 
 </body>
