@@ -70,7 +70,7 @@
 <body>
 <header>
   <h2>AI-Ensemble</h2>
-  <div>Scenario → Ensemble (parallel alternatives) → Next prompt</div>
+  <div>AI-Ensemble is a reasoning pipeline guiding a question from concepts, through parallel stochastic comparison, to applied explanation</div>
 </header>
 
 <hr />
@@ -80,25 +80,25 @@
 
   <textarea
     id="conceptualInput"
-    placeholder="Ask a conceptual or philosophical question..."
+    placeholder="Ask a conceptual or technical question and expect a broad answer"
   ></textarea>
 
-  <button id="conceptualBtn">Ask (Conceptual)</button>
+  <button id="conceptualBtn">Starting point</button>
 
   <div id="conceptualOutput" class="chat"></div>
 </section>
 <main>
-  <h3>Ensemble</h3>  
+  <h3>Ensemble: three distinct interfaces, each driven by its own stochastic parameters</h3>  
   <div id="chat"></div>
 
   <textarea id="promptInput"
-    placeholder="Describe your scenario. Ambiguity and trade-offs produce better results."></textarea>
+    placeholder="paste and edit ideas from conceptual start and lets ensemble."></textarea>
 
   <button id="sendBtn">Send</button>
   <div class="hint">Avoid simple “What is X?” prompts.</div>
 <hr />
 
-<section id="applied-research">
+<section id="applied-research: implement the ensemble output">
   <h3>Applied Research</h3>
 
   <textarea
