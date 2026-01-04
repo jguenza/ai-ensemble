@@ -1,27 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==============================
-  // Existing bindings (UNCHANGED)
+  // Core DOM bindings (existing)
   // ==============================
 
   const chat = document.getElementById("chat");
   const input = document.getElementById("promptInput");
   const sendBtn = document.getElementById("sendBtn");
 
-  // Conceptual prefix (already present in your file)
+  // ==============================
+  // Frontend message modifiers
+  // ==============================
+
   const CONCEPTUAL_PREFIX =
     "answer this from a philosophical point of view: ";
 
-   const APPLIED_SUFFIX =
-  " and explain how you came to this solution";
+  const APPLIED_SUFFIX =
+    " and explain how you came to this solution";
 
   // ==============================
-  // NEW bindings — Conceptual UI
+  // Conceptual UI bindings
   // ==============================
 
   const conceptualInput = document.getElementById("conceptualInput");
   const conceptualBtn = document.getElementById("conceptualBtn");
   const conceptualOutput = document.getElementById("conceptualOutput");
+
+  // ==============================
+  // Applied Research UI bindings
+  // ==============================
+
+  const appliedInput = document.getElementById("appliedInput");
+  const appliedBtn = document.getElementById("appliedBtn");
+  const appliedOutput = document.getElementById("appliedOutput");
 
   // ==============================
   // Helper: append to ensemble chat
@@ -36,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==============================
-  // Ensemble handler (Input A)
+  // Ensemble handler (middle)
   // ==============================
 
   sendBtn.addEventListener("click", async () => {
@@ -79,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==============================
-  // Conceptual handler (Input B)
+  // Conceptual handler (top)
   // ==============================
 
   conceptualBtn.addEventListener("click", async () => {
@@ -103,11 +114,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (!data.ok || !data.planes || !data.planes.exploratory) {
-        conceptualOutput.textContent = "Error: Invalid response from backend";
+        conceptualOutput.textContent =
+          "Error: Invalid response from backend";
         return;
       }
 
-      // Exploratory plane shown as Conceptual
+      // Exploratory plane → Conceptual
       conceptualOutput.textContent = data.planes.exploratory;
 
     } catch (err) {
@@ -116,37 +128,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-});
-appliedBtn.addEventListener("click", async () => {
-  const prompt = appliedInput.value.trim();
-  if (!prompt) return;
+  // ==============================
+  // Applied Research handler (bottom)
+  // ==============================
 
-  appliedOutput.textContent = "Thinking (applied research)…";
+  appliedBtn.addEventListener("click", async () => {
+    const prompt = appliedInput.value.trim();
+    if (!prompt) return;
 
-  try {
-    const response = await fetch(
-      "https://statsapp-47vj4.ondigitalocean.app/api/chat",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: prompt + APPLIED_SUFFIX
-        })
+    appliedOutput.textContent = "Thinking (applied research)…";
+
+    try {
+      const response = await fetch(
+        "https://statsapp-47vj4.ondigitalocean.app/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: prompt + APPLIED_SUFFIX
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!data.ok || !data.planes || !data.planes.balanced) {
+        appliedOutput.textContent =
+          "Error: Invalid response from backend";
+        return;
       }
-    );
 
-    const data = await response.json();
+      // Balanced plane → Applied Research
+      appliedOutput.textContent = data.planes.balanced;
 
-    if (!data.ok || !data.planes || !data.planes.balanced) {
-      appliedOutput.textContent = "Error: Invalid response from backend";
-      return;
+    } catch (err) {
+      appliedOutput.textContent = "Error: API call failed";
+      console.error(err);
     }
+  });
 
-    // Selective rendering: BALANCED only
-    appliedOutput.textContent = data.planes.balanced;
-
-  } catch (err) {
-    appliedOutput.textContent = "Error: API call failed";
-    console.error(err);
-  }
 });
