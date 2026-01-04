@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Exploratory plane → Conceptual
-      conceptualOutput.textContent = data.planes.exploratory;
+      conceptualOutput.innerHTML = data.planes.exploratory;
       if (window.MathJax) MathJax.typeset();   
     } catch (err) {
       conceptualOutput.textContent = "Error: API call failed";
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Balanced plane → Applied Research
-      appliedOutput.textContent = data.planes.balanced;
+      appliedOutput.innerHTML = data.planes.balanced;
       if (window.MathJax) MathJax.typeset();
     } catch (err) {
       appliedOutput.textContent = "Error: API call failed";
