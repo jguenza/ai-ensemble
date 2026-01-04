@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!prompt) return;
 
     conceptualOutput.textContent = "Thinking conceptually…";
+    if (window.MathJax) MathJax.typeset();
 
     try {
       const response = await fetch(
@@ -121,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Exploratory plane → Conceptual
       conceptualOutput.textContent = data.planes.exploratory;
-
+      if (window.MathJax) MathJax.typeset();   
     } catch (err) {
       conceptualOutput.textContent = "Error: API call failed";
       console.error(err);
@@ -137,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!prompt) return;
 
     appliedOutput.textContent = "Thinking (applied research)…";
-
+    if (window.MathJax) MathJax.typeset();
     try {
       const response = await fetch(
         "https://statsapp-47vj4.ondigitalocean.app/api/chat",
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Balanced plane → Applied Research
       appliedOutput.textContent = data.planes.balanced;
-
+      if (window.MathJax) MathJax.typeset();
     } catch (err) {
       appliedOutput.textContent = "Error: API call failed";
       console.error(err);
