@@ -1,0 +1,16 @@
+/* ==============================
+   Chat output containment
+   ============================== */
+
+#conceptualOutput,
+#appliedOutput {
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  min-height: 6rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
