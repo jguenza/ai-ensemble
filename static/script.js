@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
 
   const CONCEPTUAL_PREFIX =
-    "answer this from a philosophical point of view: ";
+    "answer this from a Martin Heidegger point of view: ";
 
   const APPLIED_SUFFIX =
-    " and explain how you came to this solution";
+    " make critical evaluation of this prompt as Carl Schmitt with  Marqués de Sade irony";
 
   // ==============================
   // Conceptual UI bindings
