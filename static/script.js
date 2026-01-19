@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
 
   const CONCEPTUAL_PREFIX =
-    "answer this from a Martin Heidegger point of view: ";
+    "answer this poetically from a Martin Heidegger point of view, but do not mention Martin Heidegger: ";
 
   const APPLIED_SUFFIX =
-    " make critical evaluation of this prompt as Carl Schmitt with  Marqués de Sade irony";
+    " explore the weak points this prompt as a dialoge between Carl Schmitt and Marqués de Sade but called then actor agentA and agentB ";
 
   // ==============================
   // Conceptual UI bindings
