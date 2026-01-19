@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
 
   const CONCEPTUAL_PREFIX =
-    "answer this poetically from a Martin Heidegger point of view, but do not mention Martin Heidegger: ";
+    "guide the user to improve this prompt as you are expert in phenomenology, hermeneutics, and existentialism:";
 
   const APPLIED_SUFFIX =
-    " explore the weak points this prompt as a dialoge between Carl Schmitt and Marqués de Sade but called then actor agentA and agentB ";
+    " explore the weak points as an expert nominalist and advocate of logic ";
 
   // ==============================
   // Conceptual UI bindings
