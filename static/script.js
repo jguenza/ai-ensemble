@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==============================
-  // Core DOM bindings (existing)
+  // Core DOM bindings (ensemble)
   // ==============================
 
   const chat = document.getElementById("chat");
@@ -19,19 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     " explore the weak points as an expert nominalist and advocate of logic ";
 
   // ==============================
-  // Conceptual UI bindings
+  // Refining UI bindings (was Conceptual)
   // ==============================
 
-  const conceptualInput = document.getElementById("conceptualInput");
-  const conceptualBtn = document.getElementById("conceptualBtn");
-  const conceptualOutput = document.getElementById("conceptualOutput");
+  const conceptualInput  = document.getElementById("RefiningInput");
+  const conceptualBtn    = document.getElementById("RefiningBtn");
+  const conceptualOutput = document.getElementById("RefiningOutput");
 
   // ==============================
-  // Applied Research UI bindings
+  // Output evaluator bindings (was Applied Research)
   // ==============================
 
-  const appliedInput = document.getElementById("appliedInput");
-  const appliedBtn = document.getElementById("appliedBtn");
+  const appliedInput  = document.getElementById("OutputInput");
+  const appliedBtn    = document.getElementById("appliedBtn");
   const appliedOutput = document.getElementById("appliedOutput");
 
   // ==============================
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==============================
-  // Conceptual handler (top)
+  // Refining handler (top)
   // ==============================
 
   conceptualBtn.addEventListener("click", async () => {
@@ -120,9 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Exploratory plane → Conceptual
+      // Exploratory plane → Refining
       conceptualOutput.innerHTML = data.planes.exploratory;
-      if (window.MathJax) MathJax.typeset();   
+      if (window.MathJax) MathJax.typeset();
+
     } catch (err) {
       conceptualOutput.textContent = "Error: API call failed";
       console.error(err);
@@ -130,15 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==============================
-  // Applied Research handler (bottom)
+  // Output evaluator handler (bottom)
   // ==============================
 
   appliedBtn.addEventListener("click", async () => {
     const prompt = appliedInput.value.trim();
     if (!prompt) return;
 
-    appliedOutput.textContent = "Thinking (applied research)…";
+    appliedOutput.textContent = "Evaluating response…";
     if (window.MathJax) MathJax.typeset();
+
     try {
       const response = await fetch(
         "https://statsapp-47vj4.ondigitalocean.app/api/chat",
@@ -159,9 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Balanced plane → Applied Research
+      // Balanced plane → Output evaluator
       appliedOutput.innerHTML = data.planes.balanced;
       if (window.MathJax) MathJax.typeset();
+
     } catch (err) {
       appliedOutput.textContent = "Error: API call failed";
       console.error(err);
