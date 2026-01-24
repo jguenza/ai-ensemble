@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==============================
 
   const CONCEPTUAL_PREFIX =
-    "guide the user to improve this prompt as you are expert in phenomenology, hermeneutics, and existentialism:";
+    "guide the user to improve this prompt as you are expert in the mentined topics:";
 
   const APPLIED_SUFFIX =
-    " explore the weak points as an expert nominalist and advocate of logic ";
+    " explore the weak points as you are an expert in the mentioned topics ";
 
   // ==============================
   // Refining UI bindings (was Conceptual)
