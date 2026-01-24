@@ -1,9 +1,9 @@
 # ai-ensemble
-self creating book
+Improve you prompt skill, learn how outcame variation
 # AI-Ensemble
 
-AI-Ensemble is a triple-screen, role-based reasoning system for scenario-driven learning,
-expert analysis, and managerial decision support.
+AI-Ensemble is a triple-screen, role-based reasoning system for learning how to optimally interact with AI.
+
 
 ## 🔗 Product pages
 
