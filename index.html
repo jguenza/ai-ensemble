@@ -89,43 +89,43 @@
 <body>
 <header>
   <h2>AI-Ensemble</h2>
-  <div>AI-Ensemble is a reasoning pipeline guiding a question from concepts, through parallel stochastic comparison, to applied explanation</div>
+  <div>AI-Ensemble guides a question from concept, through variation, to explanation.</div>
 </header>
 
 <hr />
 
-<section id="conceptual">
-  <h3>Conceptual</h3>
+<section id="Refining">
+  <h3>Refining: The primary goal is to learn how to structure effective prompts.</h3>
 
   <textarea
-    id="conceptualInput"
-    placeholder="Ask a conceptual or technical question and expect a broad answer"
+    id="RefiningInput"
+    placeholder="Ask what you want to reason about, not what you want to conclude."
   ></textarea>
 
-  <button id="conceptualBtn">Starting point</button>
+  <button id="RefiningBtn">Starting point</button>
 
-  <div id="conceptualOutput" class="chat"></div>
+  <div id="RefiningOutput" class="chat"></div>
 </section>
 <main>
-  <h3>Ensemble: three distinct interfaces, each driven by its own stochastic parameters</h3>  
+  <h3>Ensemble: eeing multiple responses reveals what the prompt allows or forbids.</h3>  
   <div id="chat"></div>
 
   <textarea id="promptInput"
-    placeholder="paste and edit ideas from conceptual start and lets ensemble."></textarea>
+    placeholder="paste refined prompts, prompt engineering is learned by comparing outcomes."></textarea>
 
   <button id="sendBtn">Send</button>
   <div class="hint">Avoid simple “What is X?” prompts.</div>
 <hr />
 
-<section id="applied-research: implement the ensemble output">
-  <h3>Applied Research</h3>
+<section id="Output-evaluator: evaluate one of the ensemble response">
+  <h3>Output evaluator: The goal is to learn a prompting skill you can reuse anywhere</h3>
 
   <textarea
-    id="appliedInput"
-    placeholder="Ask an applied research question..."
+    id="OutputInput"
+    placeholder="Paste one of the generated responses from above to identify weaknesses in the original prompt."
   ></textarea>
 
-  <button id="appliedBtn">Ask (Applied Research)</button>
+  <button id="appliedBtn">Paste one the responses</button>
 
   <div id="appliedOutput" class="chat"></div>
 </section>

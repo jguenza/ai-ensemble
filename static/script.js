@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prompt = conceptualInput.value.trim();
     if (!prompt) return;
 
-    conceptualOutput.textContent = "Thinking conceptually…";
+    conceptualOutput.textContent = "improving your prompt…";
     if (window.MathJax) MathJax.typeset();
 
     try {
