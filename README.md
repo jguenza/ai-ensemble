@@ -1,5 +1,5 @@
 # ai-ensemble
-Improve you prompt skill, learn how outcame variation
+Improve your prompt skill, learn how outcame variation
 # AI-Ensemble
 
 AI-Ensemble is a triple-screen, role-based reasoning system for learning how to optimally interact with AI.
